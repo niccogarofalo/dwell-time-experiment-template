@@ -1,4 +1,5 @@
 function makeParticipantId(length) {
+    console.log("creating participant ID with length " + length)
     var result           = '';
     var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     var charactersLength = characters.length;
@@ -13,6 +14,11 @@ function parseJavaScriptData(infoData) {
     let dataType = infoData[0];
     let displayText = infoData[1];
     let additionalOptions = infoData[2];
+    if (additionalOptions == null) {
+        additionalOptions = new Map()
+    }
+    console.log("Data to be added to timeline:")
+    console.log(infoData)
     switch (dataType) {
         case "resize":
             return {
@@ -24,9 +30,9 @@ function parseJavaScriptData(infoData) {
             }
         case "text":
             let tempStorage = {
-                type: "html-keyboard-response",
+                type: 'html-keyboard-response',
                 stimulus: displayText,
-                choice: ["spacebar"]
+                choice: ['spacebar']
             }
             if (additionalOptions.has('key_choices')) {
                 tempStorage.choice = additionalOptions.get('key_choices')
