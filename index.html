@@ -72,6 +72,31 @@ var test_stimuli = [
         https://medium.com/poka-techblog/simplify-your-javascript-use-map-reduce-and-filter-bd02c593cc2d
         */
 
+        const urlParams = new URLSearchParams(window.location.search);
+        const filmToShow = urlParams.get("slideshow");
+
+        /*
+        const target = 600
+        function getScalar(film) {
+            switch (film) {
+                case "ball-pass":
+                    return 540/target;
+                case "card-trick":
+                    return 720/target;
+                case "kidpack":
+                    return 281/target;
+                case "laces":
+                    return 686/target;
+                case "practiceslides":
+                    return 686/target;
+                case "sample-kitchen":
+                    return 720/target;
+                default:
+                    return 1;
+            }
+        }
+        */
+
         /* set up async GET request */
 
         var req = new XMLHttpRequest();
