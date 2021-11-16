@@ -25,7 +25,8 @@
             <script type="text/javascript" src="lib/vendors/jquery-2.2.0.min.js"></script>
             <script type="text/javascript" src="lib/jspsych-pavlovia-3.0.0.js"></script>
             <script type="text/javascript" src="./sheetjs-0.16.8/dist/xlsx.full.min.js"></script>
-            <script type="text/javascript" src="./niccoFolders.js"></script>
+            <script type="text/javascript" src="./settings.js"></script>
+            <script type="text/javascript" src="./slideshowparser.js"></script>
         </head>
         <body></body>
     <script>
@@ -33,16 +34,7 @@
         /* create array timeline */
         var timeline = [];
 
-        function makeid(length) {
-            var result           = '';
-            var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-            var charactersLength = characters.length;
-            for ( var i = 0; i < length; i++ ) {
-                result += characters.charAt(Math.floor(Math.random() * charactersLength));
-            }
-            return result;
-        }
-        var sessionId = makeid(12);
+        var sessionId = makeParticipantId(lengthOfParticipantID);
 
         jsPsych.data.addProperties({
             session_id: sessionId,
@@ -55,60 +47,9 @@
         };
         timeline.push(pavlovia_init);
 
-        /* create welcome message */
-        var welcome = {
-            type: "html-keyboard-response",
-            stimulus: "<p>Welcome to the experiment.</></p>" +
-                      "<p>After completing the experiment, you will be shown a session ID, <b>make sure to record it.</b></></p>" + 
-                      "<p>Please note, you <b>must</b> have a <b>keyboard</b> for this experiment.</></p>" +
-                      "<p>Press the spacebar to begin.</p>",
-            choices: ['spacebar']
-        };
-        timeline.push(welcome);
-
-        const urlParams = new URLSearchParams(window.location.search);
-        const filmToShow = urlParams.get("slideshow");
-        const target = 600
-        function getScalar(film) {
-            switch (film) {
-                case "ball-pass":
-                    return 540/target;
-                case "card-trick":
-                    return 720/target;
-                case "kidpack":
-                    return 281/target;
-                case "laces":
-                    return 686/target;
-                case "practiceslides":
-                    return 686/target;
-                case "sample-kitchen":
-                    return 720/target;
-                default:
-                    return 1;
-            }
+        for (let i = 0; i < study_introduction.length; i ++) {
+            timeline.push(parseJavaScriptData(study_introduction[i]))
         }
-        let imageScalar = getScalar(filmToShow);
-
-        var resizing = {
-            type: 'resize',
-            item_width: 3 + 3/8,
-            item_height: 2 + 1/8,
-            prompt: "<p>Click and drag the lower right corner of the box until the box is the same size as a credit card held up to the screen.</p>",
-            pixels_per_unit: 150*imageScalar
-        };
-        timeline.push(resizing);
-        
-        /* create instruction message */
-        var instructions = {
-            type: "html-keyboard-response",
-            stimulus: "<p style=\"font-size: " + Math.floor(24*imageScalar) + "px;\">" + 
-            "Please advance through the slideshow at your own pace.<br><br>" +
-            "Remember to follow the given instructions.<br><br>" +
-            "Press the spacebar to advance.</p>",
-            choices: ['spacebar'],
-            post_trial_gap: 500
-        };
-        timeline.push(instructions);
         
         /* test trial */
         /*
@@ -130,15 +71,12 @@ var test_stimuli = [
         /* create list of images to preload. same as above but much less code
         https://medium.com/poka-techblog/simplify-your-javascript-use-map-reduce-and-filter-bd02c593cc2d
         */
-        
-
-        var url = "slideshows.xlsx";
 
         /* set up async GET request */
 
         var req = new XMLHttpRequest();
 
-        req.open("GET", url, true);
+        req.open("GET", nameOfXLSXfile, true);
         req.responseType = "arraybuffer";
 
         var picList;
@@ -215,18 +153,9 @@ var test_stimuli = [
                 
             }
 
-            
-            /* thank you screen */
-            var thankyou = {
-                type: "html-keyboard-response",
-                stimulus: "<p style=\"font-size: " + Math.floor(24*imageScalar) + "px;\">" +
-                          "You have completed this section of the study.<br><br>" + 
-                          "After pressing spacebar again, you will see your session ID,<br><br>" + 
-                          "<b>Please, you MUST copy it and paste it into the survey which brought you here.</b><br><br>" +
-                          "Once you have copied that code, you may close this tab.</p>",
-
-            };
-            timeline.push(thankyou);
+            for (let i = 0; i < study_conclusion.length; i ++) {
+                timeline.push(parseJavaScriptData(study_conclusion[i]))
+            }
 
             /* finish connection with pavlovia.org */
             var pavlovia_finish = {
