@@ -1,8 +1,6 @@
 // IGNORE THESE DECLARATIONS:
 let study_introduction = [];
-function addToIntro();
 let study_conclusion = [];
-function addToConclusion();
 
 // CHANGE OR MODIFY THIS STUFF:
 

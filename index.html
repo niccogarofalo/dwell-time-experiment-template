@@ -28,7 +28,7 @@
             <script type="text/javascript" src="./settings.js"></script>
             <script type="text/javascript" src="./slideshowparser.js"></script>
         </head>
-        <body></body>
+        <body>
     <script>
 
         /* create array timeline */
@@ -48,7 +48,7 @@
         timeline.push(pavlovia_init);
 
         for (let i = 0; i < study_introduction.length; i ++) {
-            timeline.push(parseJavaScriptData(study_introduction[i]))
+            timeline.push(parseJavaScriptData(study_introduction[i]));
         }
         
         /* test trial */
@@ -154,7 +154,7 @@ var test_stimuli = [
             }
 
             for (let i = 0; i < study_conclusion.length; i ++) {
-                timeline.push(parseJavaScriptData(study_conclusion[i]))
+                timeline.push(parseJavaScriptData(study_conclusion[i]));
             }
 
             /* finish connection with pavlovia.org */
@@ -180,4 +180,5 @@ var test_stimuli = [
         req.send();
 
     </script>
+        </body>
     </html>
