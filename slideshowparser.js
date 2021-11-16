@@ -28,10 +28,10 @@ function parseJavaScriptData(infoData) {
                 stimulus: displayText,
                 choice: ["spacebar"]
             }
-            if (additionalOptions.containsKey('key_choices')) {
+            if (additionalOptions.has('key_choices')) {
                 tempStorage.choice = additionalOptions.get('key_choices')
             }
-            if (additionalOptions.containsKey('post_trial_gap')) {
+            if (additionalOptions.has('post_trial_gap')) {
                 tempStorage.post_trial_gap = additionalOptions.get('post_trial_gap')
             }
             return tempStorage;
