@@ -32,13 +32,13 @@ function parseJavaScriptData(infoData) {
             let tempStorage = {
                 type: 'html-keyboard-response',
                 stimulus: displayText,
-                choice: ['spacebar']
+                choices: [default_advancement_key]
             }
             if (additionalOptions.has('key_choices')) {
-                tempStorage.choice = additionalOptions.get('key_choices')
+                tempStorage.choices = additionalOptions.get('key_choices');
             }
             if (additionalOptions.has('post_trial_gap')) {
-                tempStorage.post_trial_gap = additionalOptions.get('post_trial_gap')
+                tempStorage.post_trial_gap = additionalOptions.get('post_trial_gap');
             }
             return tempStorage;
     }

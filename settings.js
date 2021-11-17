@@ -6,9 +6,11 @@ let study_conclusion = [];
 
 // There is no guarantee that every participant is assigned a unqiue identifier. Keep this number semi-large (10+)
 // to ensure that it is highly unlikely that two participants are assigned the same identifier.
-let lengthOfParticipantID = 12
+let length_of_participant_id = 12
 
-let nameOfXLSXfile = "slideshows.xlsx"
+let name_of_xlsx_file = "slideshows.xlsx"
+
+let default_advancement_key = "Shift"
 
 addToIntro("text",
     "Welcome to the experiment.<br><br>" +
@@ -33,7 +35,7 @@ addToConclusion("text",
     "<b>You MUST copy it and paste it into the survey which brought you here.</b><br><br>" +
     "Once you have copied that code, you may close this tab.<br><br>" +
     "Press the 'Enter' key to continue",
-    new Map([["key_choices", "Enter"]]))
+    new Map([["key_choices", ["Enter"]]]))
 
 // THESE FUNCTIONS ARE HOW YOU INTERACT WITH THE PROGRAM
 // I LEFT THEM HERE IN CASE YOU ARE CURIOUS HOW THEY WORK

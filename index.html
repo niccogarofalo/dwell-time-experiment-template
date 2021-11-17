@@ -34,8 +34,8 @@
         /* create array timeline */
         var timeline = [];
 
-        var sessionId = makeParticipantId(lengthOfParticipantID);
-
+        // randomly generate a session ID for the participant and add it to the trial data
+        var sessionId = makeParticipantId(length_of_participant_id);
         jsPsych.data.addProperties({
             session_id: sessionId,
         })
@@ -47,6 +47,7 @@
         };
         timeline.push(pavlovia_init);
 
+        // Add introductory slides for things declared in settings.js
         for (let i = 0; i < study_introduction.length; i ++) {
             timeline.push(parseJavaScriptData(study_introduction[i]));
         }
@@ -72,6 +73,7 @@ var test_stimuli = [
         https://medium.com/poka-techblog/simplify-your-javascript-use-map-reduce-and-filter-bd02c593cc2d
         */
 
+        // get the slideshow to display from the url parameters
         const urlParams = new URLSearchParams(window.location.search);
         const filmToShow = urlParams.get("slideshow");
 
@@ -101,7 +103,7 @@ var test_stimuli = [
 
         var req = new XMLHttpRequest();
 
-        req.open("GET", nameOfXLSXfile, true);
+        req.open("GET", name_of_xlsx_file, true);
         req.responseType = "arraybuffer";
 
         var picList;
@@ -167,11 +169,12 @@ var test_stimuli = [
             timeline.push(test_procedure);
             */
             var images = [];
+            console.log(picList)
 
             for (i = 0; i < picList.length; i++) {
                 var stim = {type: 'image-keyboard-response',
-                            choices: ['spacebar'],
-                            stimulus: "./slideshow-directory/" + filmToShow + "/" + picList[i].fileName
+                            choices: [default_advancement_key],
+                            stimulus: "./slideshow-directory/" + filmToShow + "/" + picList[i].data
                         };
                 images.push(stim.stimulus);
                 timeline.push(stim);
