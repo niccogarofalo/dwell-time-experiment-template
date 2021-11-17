@@ -172,6 +172,9 @@ var test_stimuli = [
             console.log(picList)
 
             for (i = 0; i < picList.length; i++) {
+                if (picList[i].type == "text") {
+                    continue;
+                }
                 var stim = {type: 'image-keyboard-response',
                             choices: [default_advancement_key],
                             stimulus: "./slideshow-directory/" + filmToShow + "/" + picList[i].data
