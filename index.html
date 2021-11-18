@@ -174,10 +174,10 @@ var test_stimuli = [
             let excelStimuli = parseWorksheetData(picList, filmToShow);
 
             for (let j = 0; j < excelStimuli.length; j++) {
-                if (excelStimuli[i].is_image) {
-                    images.push(excelStimuli[i].stimulus)
+                if (excelStimuli[j].is_image) {
+                    images.push(excelStimuli[j].stimulus)
                 }
-                timeline.push(excelStimuli[i]);
+                timeline.push(excelStimuli[j]);
             }
 
             for (let i = 0; i < study_conclusion.length; i ++) {
