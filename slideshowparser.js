@@ -58,6 +58,7 @@ function parseWorksheetData(sheetJsonData, filmToShow) {
                 fileType = "text"
             }
         }
+        console.log(fileType)
         switch (fileType) {
             case 'image' | 'jpg' | 'jpeg' | 'png' | 'gif':
                 let imageStim = {
