@@ -62,7 +62,7 @@ function parseWorksheetData(sheetJsonData, filmToShow) {
             case 'image' | 'jpg' | 'jpeg' | 'png' | 'gif':
                 let imageStim = {
                     type: 'image-keyboard-response',
-                    stimulus: "slideshow-directory/" + filmToShow + "/" + data,
+                    stimulus: "./slideshow-directory/" + filmToShow + "/" + data,
                     choices: [default_advancement_key],
                     is_image: true
                 }
@@ -71,7 +71,7 @@ function parseWorksheetData(sheetJsonData, filmToShow) {
             case 'video' | 'mp4' | 'mov' | 'flv':
                 let vidStim = {
                     type: 'video-keyboard-response',
-                    stimulus: "slideshow-directory/" + filmToShow + "/" + data,
+                    stimulus: "./slideshow-directory/" + filmToShow + "/" + data,
                     choices: [default_advancement_key]
                 }
                 wsData.push(vidStim)
@@ -79,7 +79,7 @@ function parseWorksheetData(sheetJsonData, filmToShow) {
             case 'audio' | 'mp3' | 'wav':
                 let audioStim = {
                     type: 'audio-keyboard-response',
-                    stimulus: "slideshow-directory/" + filmToShow + "/" + data,
+                    stimulus: "./slideshow-directory/" + filmToShow + "/" + data,
                     choices: [default_advancement_key]
                 }
                 wsData.push(audioStim)
