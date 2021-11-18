@@ -173,7 +173,9 @@ var test_stimuli = [
 
             let excelStimuli = parseWorksheetData(picList, filmToShow);
 
+            console.log(excelStimuli)
             for (let j = 0; j < excelStimuli.length; j++) {
+                console.log(excelStimuli[j].is_image)
                 if (excelStimuli[j].is_image) {
                     images.push(excelStimuli[j].stimulus)
                 }
