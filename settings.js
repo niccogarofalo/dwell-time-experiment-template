@@ -10,7 +10,7 @@ let length_of_participant_id = 12
 
 let name_of_xlsx_file = "slideshows.xlsx"
 
-let default_advancement_key = "Shift"
+let default_advancement_key = "spacebar"
 
 addToIntro("text",
     "Welcome to the experiment.<br><br>" +

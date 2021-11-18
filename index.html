@@ -171,17 +171,13 @@ var test_stimuli = [
             var images = [];
             console.log(picList)
 
-            for (i = 0; i < picList.length; i++) {
-                if (picList[i].type == "text") {
-                    continue;
+            let excelStimuli = parseWorksheetData(picList, filmToShow);
+
+            for (let j = 0; j < excelStimuli.length; j++) {
+                if (excelStimuli[i].is_image) {
+                    images.push(excelStimuli[i].stimulus)
                 }
-                var stim = {type: 'image-keyboard-response',
-                            choices: [default_advancement_key],
-                            stimulus: "./slideshow-directory/" + filmToShow + "/" + picList[i].data
-                        };
-                images.push(stim.stimulus);
-                timeline.push(stim);
-                
+                timeline.push(excelStimuli[i]);
             }
 
             for (let i = 0; i < study_conclusion.length; i ++) {
@@ -201,7 +197,7 @@ var test_stimuli = [
                 timeline: timeline,
                 preload_images: images,
                 on_finish: function(){
-                    jsPsych.getDisplayElement().style.fontSize = Math.floor(48*imageScalar) + "px";
+                    jsPsych.getDisplayElement().style.fontSize = "30px";
                     jsPsych.getDisplayElement().innerHTML = sessionId;
                     //jsPsych.data.displayData('csv');
                 },
