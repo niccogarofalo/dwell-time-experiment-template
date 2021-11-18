@@ -49,7 +49,7 @@ function parseWorksheetData(sheetJsonData, filmToShow) {
     for (let row of sheetJsonData) {
         let fileType = row.type;
         let data = row.data;
-        let options = row.options;
+        let options = JSON.parse(row.options)
         if (fileType == null) {
             let extIndex = data.lastIndexOf('.');
             if (extIndex >= 0) {
@@ -82,6 +82,9 @@ function parseWorksheetData(sheetJsonData, filmToShow) {
                     type: 'audio-keyboard-response',
                     stimulus: "./slideshow-directory/" + filmToShow + "/" + data,
                     choices: [default_advancement_key]
+                }
+                if (trial_ends_after_audio in options) {
+                    audioStim.trial_ends_after_audio = options.trial_ends_after_audio
                 }
                 wsData.push(audioStim)
                 break;
