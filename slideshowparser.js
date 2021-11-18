@@ -61,6 +61,7 @@ function parseWorksheetData(sheetJsonData, filmToShow) {
         console.log(fileType)
         switch (fileType) {
             case 'image' | 'jpg' | 'jpeg' | 'png' | 'gif':
+                console.log('TEST')
                 let imageStim = {
                     type: 'image-keyboard-response',
                     stimulus: "./slideshow-directory/" + filmToShow + "/" + data,
