@@ -49,7 +49,10 @@ function parseWorksheetData(sheetJsonData, filmToShow) {
     for (let row of sheetJsonData) {
         let fileType = row.type;
         let data = row.data;
-        let options = JSON.parse(row.options)
+        let options = {}
+        if (row.options != null) {
+            options = JSON.parse(row.options)
+        }
         if (fileType == null) {
             let extIndex = data.lastIndexOf('.');
             if (extIndex >= 0) {
@@ -58,7 +61,6 @@ function parseWorksheetData(sheetJsonData, filmToShow) {
                 fileType = "text"
             }
         }
-        console.log(fileType)
         switch (fileType) {
             case 'image': case 'jpg': case 'jpeg': case 'png': case 'gif':
                 let imageStim = {
