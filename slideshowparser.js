@@ -83,7 +83,7 @@ function parseWorksheetData(sheetJsonData, filmToShow) {
                     stimulus: "./slideshow-directory/" + filmToShow + "/" + data,
                     choices: [default_advancement_key]
                 }
-                if (trial_ends_after_audio in options) {
+                if ('trial_ends_after_audio' in options) {
                     audioStim.trial_ends_after_audio = options.trial_ends_after_audio
                 }
                 wsData.push(audioStim)
