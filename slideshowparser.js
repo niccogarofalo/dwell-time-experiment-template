@@ -74,7 +74,7 @@ function parseWorksheetData(sheetJsonData, filmToShow) {
             case 'video': case 'mp4': case 'mov': case 'flv':
                 let vidStim = {
                     type: 'video-keyboard-response',
-                    stimulus: "./slideshow-directory/" + filmToShow + "/" + data,
+                    stimulus: ["./slideshow-directory/" + filmToShow + "/" + data],
                     choices: [default_advancement_key]
                 }
                 wsData.push(vidStim)
