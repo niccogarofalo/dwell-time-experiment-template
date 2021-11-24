@@ -1,7 +1,6 @@
 // IGNORE THESE DECLARATIONS:
 let study_introduction = [];
 let study_conclusion = [];
-let slideshow_possibilities = new Map();
 
 // CHANGE OR MODIFY THIS STUFF:
 
@@ -12,11 +11,6 @@ let length_of_participant_id = 12
 let name_of_xlsx_file = "slideshows.xlsx"
 
 let default_advancement_key = "spacebar"
-
-let display_random_slideshow = false
-
-// Can optionally be filled out if display_random_slideshow is true
-let slideshow_blacklist = []
 
 addToIntro("text",
     "Welcome to the experiment.<br><br>" +
