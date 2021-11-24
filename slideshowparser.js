@@ -48,7 +48,6 @@ function parseJavaScriptData(infoData) {
 // returns: a list of worksheets in json form followed by the worksheet's name, such that each can be parsed by parseWorksheetData.
 //      takes the form - [{worksheet1}, "worksheet1name", {worksheet2}, "worksheet2name", {worksheet3}, "worksheet3name"]
 function getWorksheetsJson(workbook, urlParamSlideshow) {
-    console.log("LOOK AT ME")
     if (display_random_slideshow || urlParamSlideshow === "RANDOM") {
         let slideshowNumber = Math.floor(Math.random() * workbook.SheetNames.length);
         let slideshowName = workbook.SheetNames[slideshowNumber];
@@ -65,6 +64,7 @@ function getWorksheetsJson(workbook, urlParamSlideshow) {
     if (!foundSlideshow) {
         return [getSheetErrorJson("Could not find slideshow '" + urlParamSlideshow + "'"), "N/A"]
     }
+    
     return [XLSX.utils.sheet_to_json(workbook.Sheets[urlParamSlideshow]), urlParamSlideshow]
 }
 
@@ -73,7 +73,7 @@ function getSheetErrorJson(message) {
     return [{
         type: "text",
         data: "Error: " + message
-    }];
+    }]
 }
 
 // sheetJsonData: The Json data of a single worksheet (a list of objects, each may have properties 'type', 'data', and 'options')
