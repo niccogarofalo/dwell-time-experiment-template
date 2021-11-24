@@ -114,7 +114,24 @@ var test_stimuli = [
             var data = new Uint8Array(req.response);
             var workbook = XLSX.read(data, {type:"array"});
 
-            let worksheetsToShow = getWorksheetsJson(workbook, urlParamSlideshow)
+            let worksheetsToShow = null;
+            if (display_random_slideshow || urlParamSlideshow === "RANDOM") {
+                let slideshowNumber = Math.floor(Math.random() * workbook.SheetNames.length);
+                let slideshowName = workbook.SheetNames[slideshowNumber];
+                let sheet = workbook.Sheets[slideshowName];
+                let sheetJson = XLSX.utils.sheet_to_json(sheet);
+                worksheetsToShow = [sheetJson, slideshowName]
+            }
+            let foundSlideshow = false;
+            for (var tempName of workbook.SheetNames) {
+                if (urlParamSlideshow == tempName) {
+                    foundSlideshow = true;
+                }
+            }
+            if (!foundSlideshow) {
+                worksheetsToShow = [getSheetErrorJson("Could not find slideshow '" + urlParamSlideshow + "'"), "N/A"]
+            }
+            worksheetsToShow = [XLSX.utils.sheet_to_json(workbook.Sheets[urlParamSlideshow]), urlParamSlideshow]
 
             let allStimuli = [];
             for (let k = 0; k < worksheetsToShow.length; k += 2) {
