@@ -77,7 +77,7 @@ var test_stimuli = [
 
         // get the slideshow to display from the url parameters
         const urlParams = new URLSearchParams(window.location.search);
-        let urlParamSlideshow = urlParams.get("slideshow");
+        const filmToShow = urlParams.get("slideshow");
 
         /*
         const target = 600
@@ -108,44 +108,78 @@ var test_stimuli = [
         req.open("GET", name_of_xlsx_file, true);
         req.responseType = "arraybuffer";
 
+        var picList;
+
         var test_stimuli = [];
 
         req.onload = function(e) {
             var data = new Uint8Array(req.response);
             var workbook = XLSX.read(data, {type:"array"});
 
-            let worksheetsToShow = null;
-            if (display_random_slideshow || urlParamSlideshow === "RANDOM") {
-                let slideshowNumber = Math.floor(Math.random() * workbook.SheetNames.length);
-                let slideshowName = workbook.SheetNames[slideshowNumber];
-                let sheet = workbook.Sheets[slideshowName];
-                let sheetJson = XLSX.utils.sheet_to_json(sheet);
-                worksheetsToShow = [sheetJson, slideshowName]
-            }
-            let foundSlideshow = false;
-            for (var tempName of workbook.SheetNames) {
-                if (urlParamSlideshow == tempName) {
+            var foundSlideshow = false;
+            for (var sheetnum = 0; sheetnum < workbook.SheetNames.length; sheetnum ++) {
+                if (filmToShow == workbook.SheetNames[sheetnum]) {
                     foundSlideshow = true;
                 }
             }
-            if (!foundSlideshow) {
-                worksheetsToShow = [getSheetErrorJson("Could not find slideshow '" + urlParamSlideshow + "'"), "N/A"]
-            }
-            worksheetsToShow = [XLSX.utils.sheet_to_json(workbook.Sheets[urlParamSlideshow]), urlParamSlideshow]
 
-            let allStimuli = [];
-            for (let k = 0; k < worksheetsToShow.length; k += 2) {
-                allStimuli.push(parseWorksheetData(worksheetsToShow[k], worksheetsToShow[k+1]));
+            // Get worksheet
+            var worksheet = workbook.Sheets[filmToShow];
+
+            picList = XLSX.utils.sheet_to_json(worksheet);
+
+            /*
+            for (i = 0; i < picList.length; i++) {
+                var stim = {stimulus: "./slideshow-directory/" + filmToShow + "/" + picList[i].fileName,
+                            stimulus_height: 600,
+                            stimulus_width: 100};
+                test_stimuli.push(stim);
+                
             }
 
+            var images = test_stimuli.map(test_stimuli => test_stimuli.stimulus);
+
+            
+            var test = {
+                type: "image-keyboard-response",
+                stimulus: jsPsych.timelineVariable('stimulus'),
+                choices: ['spacebar'],
+                data: jsPsych.timelineVariable('data'),
+                stimulus_height: 600,
+                stimulus_width: 100
+            };
+            
+            var fixation = {
+                type: 'html-keyboard-response',
+                stimulus: '<div style="font-size:60px;">+</div>',
+                choices: jsPsych.NO_KEYS,
+                trial_duration: function(){
+                    return jsPsych.randomization.sampleWithoutReplacement([250, 500, 750, 1000, 1250, 1500, 1750, 2000], 1)[0];
+                },
+                data: {test_part: 'fixation'}
+            };
+            
+            var test_procedure = {
+                timeline: [test],
+                timeline_variables: test_stimuli,
+                randomization_order: true,
+                repetition: 1,
+                stimulus_height: 600,
+                stimulus_width: 100
+            };
+
+            timeline.push(test_procedure);
+            */
             var images = [];
-            for (let sheetStimuli of allStimuli) {
-                for (let j = 0; j < sheetStimuli.length; j++) {
-                    if (sheetStimuli[j].is_image) {
-                        images.push(sheetStimuli[j].stimulus)
-                    }
-                    timeline.push(sheetStimuli[j]);
+            console.log(picList)
+
+            let excelStimuli = parseWorksheetData(picList, filmToShow);
+
+            for (let j = 0; j < excelStimuli.length; j++) {
+                if (excelStimuli[j].is_image) {
+                    images.push(excelStimuli[j].stimulus)
                 }
+                timeline.push(excelStimuli[j]);
             }
 
             for (let i = 0; i < study_conclusion.length; i ++) {
