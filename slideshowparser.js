@@ -47,7 +47,7 @@ function parseJavaScriptData(infoData) {
 // workbook: workbook data of excel sheet
 // returns: a list of worksheets in json form followed by the worksheet's name, such that each can be parsed by parseWorksheetData.
 //      takes the form - [{worksheet1}, "worksheet1name", {worksheet2}, "worksheet2name", {worksheet3}, "worksheet3name"]
-function getWorksheets(workbook, urlParamSlideshow) {
+function getWorksheetsJson(workbook, urlParamSlideshow) {
     if (display_random_slideshow || urlParamSlideshow === "RANDOM") {
         let slideshowNumber = Math.floor(Math.random() * workbook.SheetNames.length);
         let slideshowName = workbook.SheetNames[slideshowNumber];
@@ -122,6 +122,9 @@ function parseWorksheetData(sheetJsonData, filmToShow) {
                 }
                 if ('trial_ends_after_audio' in options) {
                     audioStim.trial_ends_after_audio = options.trial_ends_after_audio
+                }
+                if ('prompt' in options) {
+                    audioStim.prompt = options.prompt
                 }
                 wsData.push(audioStim)
                 break;
