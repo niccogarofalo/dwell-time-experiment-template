@@ -9,12 +9,10 @@ This repository contains code that can be used as a template for dwell-time expe
 - [Explanation: 'Options' Customization](#explanation-options-customization)
 
 # Overview
-Q. What is a dwell-time experiment?
-
+Q. What is a dwell-time experiment?    
 A. This dwell-time experiment refers to participants watching a series of stimuli such as text, photos, videos, or audio, and clicking through them. The time spent at each stimuli is referred to as their dwell-time.
 
-Q. How does this whole thing work?
-
+Q. How does this whole thing work?  
 A. This is a public repository that you may import to pavlovia to create dwell-time experiments. You can customize the experiment by uploading your own stimuli to be displayed, and choosing how participants interact with those stimuli. The data for each completed trial will be uploaded to pavlovia where you can retrieve and analyze that data.
 
 # How To: Import Experiment
