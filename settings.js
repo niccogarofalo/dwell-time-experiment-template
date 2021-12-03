@@ -48,17 +48,17 @@ function isAcceptedDataType(dataType) {
     return false;
 }
 
-function addToIntro(dataType, text, additional_options) {
+function addToIntro(dataType, text, options) {
     if (isAcceptedDataType(dataType)) {
-        study_introduction.push([dataType.toLowerCase(), "<p>"+text+"</p>", additional_options])
+        study_introduction.push([dataType.toLowerCase(), "<p>"+text+"</p>", options])
     } else {
         console.log("Failed to add data type '" + dataType + "' to the introduction.")
     }
 }
 
-function addToConclusion(dataType, text, additional_options) {
+function addToConclusion(dataType, text, options) {
     if (isAcceptedDataType(dataType)) {
-        study_conclusion.push([dataType.toLowerCase(), "<p>"+text+"</p>", additional_options])
+        study_conclusion.push([dataType.toLowerCase(), "<p>"+text+"</p>", options])
     } else {
         console.log("Failed to add data type '" + dataType + "' to the conclusion.")
     }
