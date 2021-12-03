@@ -12,6 +12,8 @@ let name_of_xlsx_file = "slideshows.xlsx"
 
 let default_advancement_key = "spacebar"
 
+let display_random_slideshow = false
+
 addToIntro("text",
     "Welcome to the experiment.<br><br>" +
     "After completing the experiment, you will be shown a session ID, <b>make sure to record it.</b><br><br>" + 
