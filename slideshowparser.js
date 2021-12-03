@@ -44,6 +44,9 @@ function parseJavaScriptData(infoData) {
     }
 }
 
+// sheetJsonData: The Json data of a single worksheet (a list of objects, each may have properties 'type', 'data', and 'options')
+// filmToShow: The name of that slideshow (name of folder that stimuli files are found in)
+// returns: a list of stimuli that can be used by jsPsych
 function parseWorksheetData(sheetJsonData, filmToShow) {
     let wsData = [];
     for (let row of sheetJsonData) {
@@ -88,6 +91,9 @@ function parseWorksheetData(sheetJsonData, filmToShow) {
                 if ('trial_ends_after_audio' in options) {
                     audioStim.trial_ends_after_audio = options.trial_ends_after_audio
                 }
+                if ("prompt" in options) {
+                    audioStim.prompt = options.prompt
+                }
                 wsData.push(audioStim)
                 break;
             case 'text':
@@ -101,4 +107,35 @@ function parseWorksheetData(sheetJsonData, filmToShow) {
         }
     }
     return wsData
+}
+
+// workbook: workbook data of the excel sheet
+// returns: a list of worksheets in json form followed by the worksheet's name, such that each can be parsed by parseWorksheetData.
+//      takes the form - [{worksheet1}, "worksheet1name", {worksheet2}, "worksheet2name", {worksheet3}, "worksheet3name", ...]
+function getWorksheetsJson(workbook, urlParamSlideshow) {
+    if (display_random_slideshow || urlParamSlideshow === "RANDOM") {
+        let slideshowNumber = Math.floor(Math.random() * workbook.SheetNames.length);
+        let slideshowName = workbook.SheetNames[slideshowNumber];
+        let sheet = workbook.Sheets[slideshowName];
+        let sheetJson = XLSX.utils.sheet_to_json(sheet);
+        return [sheetJson, slideshowName]
+    }
+    let foundSlideshow = false;
+    for (var tempName of workbook.SheetNames) {
+        if (urlParamSlideshow == tempName) {
+            foundSlideshow = true;
+        }
+    }
+    if (!foundSlideshow) {
+        return [getSheetErrorJson("Could not find slideshow '" + urlParamSlideshow + "'"), "N/A"]
+    }
+    return [XLSX.utils.sheet_to_json(workbook.Sheets[urlParamSlideshow]), urlParamSlideshow]
+}
+
+// returns: json that represents a worksheet. A single text stimuli that displays error 'message'.
+function getSheetErrorJson(message) {
+    return [{
+        type: "text",
+        data: "Error: " + message
+    }];
 }
